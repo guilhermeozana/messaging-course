@@ -1,0 +1,16 @@
+C:\Dometrain\messaging-start-main\Messaging\Contracts\bin\Debug\net8.0\Contracts.deps.json
+C:\Dometrain\messaging-start-main\Messaging\Contracts\bin\Debug\net8.0\Contracts.dll
+C:\Dometrain\messaging-start-main\Messaging\Contracts\bin\Debug\net8.0\Contracts.pdb
+C:\Dometrain\messaging-start-main\Messaging\Contracts\bin\Debug\net8.0\Orders.Domain.dll
+C:\Dometrain\messaging-start-main\Messaging\Contracts\bin\Debug\net8.0\Orders.Domain.pdb
+C:\Dometrain\messaging-start-main\Messaging\Contracts\obj\Debug\net8.0\Contracts.csproj.AssemblyReference.cache
+C:\Dometrain\messaging-start-main\Messaging\Contracts\obj\Debug\net8.0\Contracts.GeneratedMSBuildEditorConfig.editorconfig
+C:\Dometrain\messaging-start-main\Messaging\Contracts\obj\Debug\net8.0\Contracts.AssemblyInfoInputs.cache
+C:\Dometrain\messaging-start-main\Messaging\Contracts\obj\Debug\net8.0\Contracts.AssemblyInfo.cs
+C:\Dometrain\messaging-start-main\Messaging\Contracts\obj\Debug\net8.0\Contracts.csproj.CoreCompileInputs.cache
+C:\Dometrain\messaging-start-main\Messaging\Contracts\obj\Debug\net8.0\Contracts.sourcelink.json
+C:\Dometrain\messaging-start-main\Messaging\Contracts\obj\Debug\net8.0\Contracts.csproj.Up2Date
+C:\Dometrain\messaging-start-main\Messaging\Contracts\obj\Debug\net8.0\Contracts.dll
+C:\Dometrain\messaging-start-main\Messaging\Contracts\obj\Debug\net8.0\refint\Contracts.dll
+C:\Dometrain\messaging-start-main\Messaging\Contracts\obj\Debug\net8.0\Contracts.pdb
+C:\Dometrain\messaging-start-main\Messaging\Contracts\obj\Debug\net8.0\ref\Contracts.dll

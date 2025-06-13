@@ -1,0 +1,15 @@
+C:\Dometrain\messaging-start-main\Messaging\Orders.Domain\bin\Debug\net8.0\Orders.Domain.deps.json
+C:\Dometrain\messaging-start-main\Messaging\Orders.Domain\bin\Debug\net8.0\Orders.Domain.runtimeconfig.json
+C:\Dometrain\messaging-start-main\Messaging\Orders.Domain\bin\Debug\net8.0\Orders.Domain.dll
+C:\Dometrain\messaging-start-main\Messaging\Orders.Domain\bin\Debug\net8.0\Orders.Domain.pdb
+C:\Dometrain\messaging-start-main\Messaging\Orders.Domain\obj\Debug\net8.0\Orders.Domain.csproj.AssemblyReference.cache
+C:\Dometrain\messaging-start-main\Messaging\Orders.Domain\obj\Debug\net8.0\Orders.Domain.GeneratedMSBuildEditorConfig.editorconfig
+C:\Dometrain\messaging-start-main\Messaging\Orders.Domain\obj\Debug\net8.0\Orders.Domain.AssemblyInfoInputs.cache
+C:\Dometrain\messaging-start-main\Messaging\Orders.Domain\obj\Debug\net8.0\Orders.Domain.AssemblyInfo.cs
+C:\Dometrain\messaging-start-main\Messaging\Orders.Domain\obj\Debug\net8.0\Orders.Domain.csproj.CoreCompileInputs.cache
+C:\Dometrain\messaging-start-main\Messaging\Orders.Domain\obj\Debug\net8.0\Orders.Domain.sourcelink.json
+C:\Dometrain\messaging-start-main\Messaging\Orders.Domain\obj\Debug\net8.0\Orders.Domain.dll
+C:\Dometrain\messaging-start-main\Messaging\Orders.Domain\obj\Debug\net8.0\refint\Orders.Domain.dll
+C:\Dometrain\messaging-start-main\Messaging\Orders.Domain\obj\Debug\net8.0\Orders.Domain.pdb
+C:\Dometrain\messaging-start-main\Messaging\Orders.Domain\obj\Debug\net8.0\Orders.Domain.genruntimeconfig.cache
+C:\Dometrain\messaging-start-main\Messaging\Orders.Domain\obj\Debug\net8.0\ref\Orders.Domain.dll
