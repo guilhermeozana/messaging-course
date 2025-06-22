@@ -54,6 +54,10 @@
             "AutoMapper": {
               "target": "Package",
               "version": "[13.0.1, )"
+            },
+            "MassTransit": {
+              "target": "Package",
+              "version": "[8.5.0-develop.2309, )"
             }
           },
           "imports": [

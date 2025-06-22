@@ -18,7 +18,7 @@ namespace OrdersApi.Services
             return await _orderRepository.GetOrdersAsync();
         }
 
-        public async Task<Order> GetOrderAsync(int id)
+        public async Task<Order?> GetOrderAsync(int id)
         {
             return await _orderRepository.GetOrderAsync(id);
         }

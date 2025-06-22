@@ -1,4 +1,5 @@
 using System.Reflection;
+using Contracts.Response;
 using MassTransit;
 using Microsoft.EntityFrameworkCore;
 using Orders.Data;
@@ -39,7 +40,15 @@ namespace OrdersApi
 
             builder.Services.AddMassTransit(x =>
             {
+                x.SetKebabCaseEndpointNameFormatter();
+                //x.SetEndpointNameFormatter(new KebabCaseEndpointNameFormatter("hellos", false));
+                
+                //x.AddConsumer<OrderCreatedConsumer, OrderCreatedConsumerDefinition>();
                 x.AddConsumer<OrderCreatedConsumer>();
+                //x.AddConsumer<VerifyOrderConsumer>();
+                
+                x.AddRequestClient<VerifyOrder>();
+                //x.AddConsumer(typeof(OrderCreatedConsumer), typeof(OrderCreatedConsumerDefinition));
                 
                 //x.AddConsumer(typeof(OrderCreatedConsumer));
 
@@ -53,6 +62,11 @@ namespace OrdersApi
                     //     h.Username("guest");
                     //     h.Password("guest");
                     // });
+                    
+                    cfg.ReceiveEndpoint("order-created", e =>
+                    {
+                        e.ConfigureConsumer<OrderCreatedConsumer>(context);
+                    });
                     
                     cfg.ConfigureEndpoints(context);
                 });

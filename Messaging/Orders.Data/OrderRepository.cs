@@ -21,7 +21,7 @@ namespace Orders.Data
                 .ToListAsync();
         }
 
-        public async Task<Order> GetOrderAsync(int id)
+        public async Task<Order?> GetOrderAsync(int id)
         {
             return await _context.Orders
                 .Include(o => o.Customer)

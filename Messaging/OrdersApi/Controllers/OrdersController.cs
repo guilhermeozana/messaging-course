@@ -1,7 +1,6 @@
-﻿using System.Threading.Channels;
-using AutoMapper;
-using Contracts.Events;
+﻿using AutoMapper;
 using Contracts.Models;
+using Contracts.Response;
 using MassTransit;
 using Microsoft.AspNetCore.Mvc;
 using Orders.Domain.Entities;
@@ -18,17 +17,22 @@ namespace OrdersApi.Controllers
         private readonly IProductStockServiceClient productStockServiceClient;
         private readonly IMapper mapper;
         private readonly IPublishEndpoint publishEndpoint;
+        private readonly ISendEndpointProvider sendEndpointProvider;
+        private readonly IRequestClient<VerifyOrder> _requestClient;
 
         public OrdersController(IOrderService orderService,
             IProductStockServiceClient productStockServiceClient,
             IMapper mapper,
-            IPublishEndpoint publishEndpoint
-            )
+            IPublishEndpoint publishEndpoint, 
+            ISendEndpointProvider sendEndpointProvider,
+            IRequestClient<VerifyOrder> requestClient)
         {
             _orderService = orderService;
             this.productStockServiceClient = productStockServiceClient;
             this.mapper = mapper;
             this.publishEndpoint = publishEndpoint;
+            this.sendEndpointProvider = sendEndpointProvider;
+            _requestClient = requestClient;
         }
 
 
@@ -36,32 +40,14 @@ namespace OrdersApi.Controllers
         [HttpPost]
         public async Task<ActionResult<Order>> PostOrder(OrderModel model)
         {
-            //verify stock
-            //var stocks = await productStockServiceClient.GetStock(
-            //    model.OrderItems.Select(p => p.ProductId).ToList());
-
-            var orderToAdd = mapper.Map<Order>(model);
-            var createdOrder = await _orderService.AddOrderAsync(orderToAdd);
-
-            var notifyOrderCreated = publishEndpoint.Publish(new OrderCreated()
+            var sendEndpoint = await sendEndpointProvider.GetSendEndpoint(new Uri("queue:create-order-command"));
+            await sendEndpoint.Send(model, context =>
             {
-                CreatedAt = createdOrder.OrderDate,
-                Id = createdOrder.Id,
-                OrderId = createdOrder.OrderId,
-                TotalAmount = createdOrder.OrderItems.Sum(oi => oi.Price * oi.Quantity)
+                context.Headers.Set("command-header", "value");
+                context.TimeToLive = TimeSpan.FromMinutes(5);
             });
-
-            // var notify2 = publishEndpoint.Publish<OrderCreated>(new
-            // {
-            //     createdOrder.Id,
-            //     createdOrder.OrderId,
-            //     CreatedAt = createdOrder.OrderDate,
-            //     TotalAmount = createdOrder.OrderItems.Sum(oi => oi.Price * oi.Quantity)
-            // });
-            //
-            // var notify3 = publishEndpoint.Publish(model);
-            
-            return CreatedAtAction("GetOrder", new { id = createdOrder.Id }, createdOrder);
+                
+            return Accepted();
         }
 
 
@@ -69,13 +55,31 @@ namespace OrdersApi.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Order>> GetOrder(int id)
         {
-            var order = await _orderService.GetOrderAsync(id);
-            if (order == null)
+            var response = await _requestClient.GetResponse<OrderResult, OrderNotFoundResult>(new VerifyOrder()
             {
-                return NotFound();
-            }
+                Id = id
+            });
 
-            return Ok(order);
+            if (response.Is(out Response<OrderResult>? incomingMessage))
+            {
+                return Ok(incomingMessage.Message);
+            }
+            
+            if (response.Is(out Response<OrderNotFoundResult>? notFound))
+            {
+                return Ok(notFound.Message);
+            }
+            
+            // var order = await _orderService.GetOrderAsync(id);
+            // if (order == null)
+            // {
+            //     return NotFound();
+            // }
+            //
+            // return Ok(order);
+            
+            return BadRequest();
+            
         }
 
         // PUT: api/Orders/5
