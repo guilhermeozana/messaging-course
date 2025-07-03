@@ -1,4 +1,8 @@
 using System.Reflection;
+using Contracts.Events;
+using Contracts.Filters;
+using Contracts.Infrastructure;
+using Contracts.Models;
 using Contracts.Response;
 using MassTransit;
 using Microsoft.EntityFrameworkCore;
@@ -35,19 +39,31 @@ namespace OrdersApi
 
             builder.Services.AddScoped<IOrderRepository, OrderRepository>();
             builder.Services.AddScoped<IOrderService, OrderService>();
+            builder.Services.AddScoped<Tenant>();
 
             builder.Services.AddHttpClient<IProductStockServiceClient, ProductStockServiceClient>();
 
             builder.Services.AddMassTransit(x =>
             {
                 x.SetKebabCaseEndpointNameFormatter();
+                
+                x.AddEntityFrameworkOutbox<OrderContext>(o =>
+                {
+                    o.UseSqlServer();
+                    o.UseBusOutbox(x => x.DisableDeliveryService());
+                    //o.UseBusOutbox();
+                });
+                
                 //x.SetEndpointNameFormatter(new KebabCaseEndpointNameFormatter("hellos", false));
                 
                 //x.AddConsumer<OrderCreatedConsumer, OrderCreatedConsumerDefinition>();
-                x.AddConsumer<OrderCreatedConsumer>();
+                //x.AddConsumer<OrderCreatedConsumer>();
                 //x.AddConsumer<VerifyOrderConsumer>();
+                //register fault consumers
+                //x.AddConsumer<OrderCreatedFaultConsumer>();
+                //x.AddConsumer<AllFaultsConsumer>();
                 
-                x.AddRequestClient<VerifyOrder>();
+                //x.AddRequestClient<VerifyOrder>();
                 //x.AddConsumer(typeof(OrderCreatedConsumer), typeof(OrderCreatedConsumerDefinition));
                 
                 //x.AddConsumer(typeof(OrderCreatedConsumer));
@@ -57,16 +73,33 @@ namespace OrdersApi
 
                 x.UsingRabbitMq((context, cfg) =>
                 {
+                    cfg.UseMessageRetry(r =>
+                    {
+                        r.Immediate(2);
+                    });
                     // cfg.Host("rabbitmq://localhost", "/", h =>
                     // {
                     //     h.Username("guest");
                     //     h.Password("guest");
                     // });
+
+                    cfg.SendTopology.ErrorQueueNameFormatter = new MyCoolErrorQueueNameFormatter();
                     
-                    cfg.ReceiveEndpoint("order-created", e =>
-                    {
-                        e.ConfigureConsumer<OrderCreatedConsumer>(context);
-                    });
+                    cfg.UseSendFilter(typeof(TenantSendFilter<>), context);
+                    cfg.UsePublishFilter(typeof(TenantPublishFilter<>), context);
+                    cfg.UsePublishFilter(typeof(TenantPublishFilter<>), context, x => x.Include(typeof(Email)));
+                    //cfg.UseConsumeFilter(typeof(TenantPublishFilter<>), context);
+                    
+                    cfg.UsePublishFilter<TenantPublishEmailFilter>(context);
+                    //cfg.UseFilter(new TenantConsumeFilter<OrderCreated>());
+                    cfg.UseFilter(new MyCoolFilter());
+                    
+                    // cfg.ReceiveEndpoint("order-created", e =>
+                    // {
+                    //     e.UseFilter(new TenantConsumeFilter<OrderCreated>());
+                    //     e.UseMessageRetry(x => x.Interval(2, 500));
+                    //     e.ConfigureConsumer<OrderCreatedConsumer>(context);
+                    // });
                     
                     cfg.ConfigureEndpoints(context);
                 });

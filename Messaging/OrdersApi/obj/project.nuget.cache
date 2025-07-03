@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "4etL8CbLvuA=",
+  "dgSpecHash": "GcbYy3RIKp4=",
   "success": true,
   "projectFilePath": "C:\\Dometrain\\messaging-start-main\\Messaging\\OrdersApi\\OrdersApi.csproj",
   "expectedPackageFiles": [
@@ -9,6 +9,7 @@
     "C:\\Users\\guilh\\.nuget\\packages\\azure.identity\\1.10.3\\azure.identity.1.10.3.nupkg.sha512",
     "C:\\Users\\guilh\\.nuget\\packages\\masstransit\\8.5.0-develop.2309\\masstransit.8.5.0-develop.2309.nupkg.sha512",
     "C:\\Users\\guilh\\.nuget\\packages\\masstransit.abstractions\\8.5.0-develop.2309\\masstransit.abstractions.8.5.0-develop.2309.nupkg.sha512",
+    "C:\\Users\\guilh\\.nuget\\packages\\masstransit.entityframeworkcore\\8.0.8\\masstransit.entityframeworkcore.8.0.8.nupkg.sha512",
     "C:\\Users\\guilh\\.nuget\\packages\\masstransit.rabbitmq\\8.5.0-develop.2307\\masstransit.rabbitmq.8.5.0-develop.2307.nupkg.sha512",
     "C:\\Users\\guilh\\.nuget\\packages\\microsoft.bcl.asyncinterfaces\\1.1.1\\microsoft.bcl.asyncinterfaces.1.1.1.nupkg.sha512",
     "C:\\Users\\guilh\\.nuget\\packages\\microsoft.csharp\\4.5.0\\microsoft.csharp.4.5.0.nupkg.sha512",

@@ -35,7 +35,9 @@ namespace Orders.Domain.Entities
         Delivered,
 
         [Description("Completed")]
-        Completed
+        Completed,
 
+        [Description("CancelationRequested")]
+        CancelationRequested
     }
 }

@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("AdminNotification.Worker")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+bcb28c151204b87ccb4b88c23c98d6918bb5c541")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+1f304f4e8cf02f1697158f91b414c2c6aedc6f2e")]
 [assembly: System.Reflection.AssemblyProductAttribute("AdminNotification.Worker")]
 [assembly: System.Reflection.AssemblyTitleAttribute("AdminNotification.Worker")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

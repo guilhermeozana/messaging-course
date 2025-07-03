@@ -217,6 +217,10 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "dependencies": {
+            "MassTransit.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[8.0.8, )"
+            },
             "Microsoft.EntityFrameworkCore": {
               "target": "Package",
               "version": "[8.0.8, )"
@@ -292,6 +296,9 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
+              "C:\\Dometrain\\messaging-start-main\\Messaging\\Contracts\\Contracts.csproj": {
+                "projectPath": "C:\\Dometrain\\messaging-start-main\\Messaging\\Contracts\\Contracts.csproj"
+              },
               "C:\\Dometrain\\messaging-start-main\\Messaging\\Orders.Data\\Orders.Data.csproj": {
                 "projectPath": "C:\\Dometrain\\messaging-start-main\\Messaging\\Orders.Data\\Orders.Data.csproj"
               },

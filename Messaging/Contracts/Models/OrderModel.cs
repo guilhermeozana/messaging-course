@@ -7,7 +7,7 @@ namespace Contracts.Models
 
         public OrderModel()
         {
-            Status = OrderStatus.Created;
+            Status = OrderStatus.Received;
             OrderId = Guid.NewGuid();
 
         }
@@ -19,7 +19,7 @@ namespace Contracts.Models
         public string Email { get; set; }
 
         public Guid OrderId { get; set; }
-       
+
         public List<OrderItemModel> OrderItems { get; set; }
     }
 }

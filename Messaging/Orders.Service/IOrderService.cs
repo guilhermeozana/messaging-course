@@ -1,4 +1,5 @@
-﻿using Orders.Domain.Entities;
+﻿using Contracts.Models;
+using Orders.Domain.Entities;
 
 namespace Orders.Service
 {
@@ -10,5 +11,7 @@ namespace Orders.Service
         Task<IEnumerable<Order>> GetOrdersAsync();
         Task<Order> UpdateOrderAsync(Order order);
         Task<bool> OrderExistsAsync(int id);
+        Task AcceptOrder(OrderModel model);
+        Task<int> SaveChangesAsync();
     }
 }

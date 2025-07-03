@@ -1,5 +1,9 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Contracts.Events;
+using Contracts.Models;
+using MassTransit;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Orders.Domain.Entities;
 using PaymentProcessor.Services;
 
 namespace PaymentProcessor.Controllers
@@ -8,17 +12,35 @@ namespace PaymentProcessor.Controllers
     [ApiController]
     public class PaymentController : ControllerBase
     {
-        private readonly IPaymentService paymentService;
+        private readonly IPublishEndpoint _publishEndpoint;
 
-        public PaymentController(IPaymentService paymentService)
+        public PaymentController(IPublishEndpoint publishEndpoint)
         {
-            this.paymentService = paymentService;
+            _publishEndpoint = publishEndpoint;
         }
 
-        [HttpGet]
-        public IActionResult Get()
+        [HttpPost("/pay")]
+        public async Task<IActionResult> Post(PayModel model)
         {
+            await _publishEndpoint.Publish(new OrderPaid()
+            {
+                AmountPaid = model.AmountPaid,
+                OrderId = model.OrderId,
+                PaymentMethod = model.PaymentMethod
+            });
+            
             return Ok("Payment Processor API");
         }
+        
+        [HttpGet("/requestcancelation/{id}")]
+        public async Task<ActionResult<Order>> RequestCancelation(Guid id)
+        {
+            await _publishEndpoint.Publish(new CancelationRequested()
+            {
+                OrderId = id
+            });
+            return Accepted();
+        }
+
     }
 }

@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Contracts.Filters;
 using Contracts.Models;
 using Contracts.Response;
 using MassTransit;
@@ -19,13 +20,15 @@ namespace OrdersApi.Controllers
         private readonly IPublishEndpoint publishEndpoint;
         private readonly ISendEndpointProvider sendEndpointProvider;
         private readonly IRequestClient<VerifyOrder> _requestClient;
+        private readonly Tenant _tenant; 
 
         public OrdersController(IOrderService orderService,
             IProductStockServiceClient productStockServiceClient,
             IMapper mapper,
             IPublishEndpoint publishEndpoint, 
             ISendEndpointProvider sendEndpointProvider,
-            IRequestClient<VerifyOrder> requestClient)
+            IRequestClient<VerifyOrder> requestClient,
+            Tenant tenant)
         {
             _orderService = orderService;
             this.productStockServiceClient = productStockServiceClient;
@@ -33,6 +36,7 @@ namespace OrdersApi.Controllers
             this.publishEndpoint = publishEndpoint;
             this.sendEndpointProvider = sendEndpointProvider;
             _requestClient = requestClient;
+            _tenant.TenantId = Guid.NewGuid().ToString();
         }
 
 
@@ -40,13 +44,8 @@ namespace OrdersApi.Controllers
         [HttpPost]
         public async Task<ActionResult<Order>> PostOrder(OrderModel model)
         {
-            var sendEndpoint = await sendEndpointProvider.GetSendEndpoint(new Uri("queue:create-order-command"));
-            await sendEndpoint.Send(model, context =>
-            {
-                context.Headers.Set("command-header", "value");
-                context.TimeToLive = TimeSpan.FromMinutes(5);
-            });
-                
+            await _orderService.AcceptOrder(model);
+            
             return Accepted();
         }
 

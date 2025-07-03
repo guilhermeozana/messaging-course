@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace Contracts.Commands
 {
-    internal class CancelOrder
+    public class CancelOrder
     {
+        public Guid OrderId { get; set; }
     }
 }

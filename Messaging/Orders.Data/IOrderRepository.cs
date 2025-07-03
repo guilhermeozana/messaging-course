@@ -10,5 +10,6 @@ namespace Orders.Data
         Task<IEnumerable<Order>> GetOrdersAsync();
         Task<bool> OrderExistsAsync(int id);
         Task<Order> UpdateOrderAsync(Order order);
+        Task<int> SaveChangesAsync();
     }
 }

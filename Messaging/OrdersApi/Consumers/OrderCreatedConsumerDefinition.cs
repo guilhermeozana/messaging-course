@@ -15,9 +15,21 @@ public class OrderCreatedConsumerDefinition : ConsumerDefinition<OrderCreatedCon
         });
     }
 
-    protected override void ConfigureConsumer(IReceiveEndpointConfigurator receiveEndpointConfigurator, 
+    protected override void ConfigureConsumer(IReceiveEndpointConfigurator endpointConfigurator, 
         IConsumerConfigurator<OrderCreatedConsumer> consumerConfigurator, IRegistrationContext context)
     {
-        consumerConfigurator.UseMessageRetry(r => { r.Immediate(5); });
+        endpointConfigurator.PublishFaults = false; 
+        consumerConfigurator.UseMessageRetry(r =>
+        {
+            r.Immediate(5);
+            r.Exponential(3, TimeSpan.FromSeconds(5),
+                TimeSpan.FromSeconds(40),
+                TimeSpan.FromSeconds(2) 
+            );
+            r.Intervals(TimeSpan.FromSeconds(10),
+                TimeSpan.FromSeconds(40),
+                TimeSpan.FromSeconds(2)
+            );
+        });
     }
 }
